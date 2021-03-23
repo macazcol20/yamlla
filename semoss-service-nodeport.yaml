@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: semoss-nodeport
+  namespace: healthcarex-demo
+  labels:
+    app.kubernetes.io/name: semoss-pod
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: semoss-pod
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster

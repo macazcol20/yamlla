@@ -1,0 +1,125 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: semoss-pod
+  namespace: healthcarex-demo
+  labels:
+    app.kubernetes.io/name: semoss-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: semoss-pod
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: semoss-pod
+    spec:
+      imagePullSecrets:
+      - name: docker-semoss-org
+      containers:
+        - name: semoss
+          image: 'docker.semoss.org/healthcarex/hcx:12-19-2020-updatedIcon2'
+          command:
+            - /bin/bash
+          args:
+            - '-c'
+            - >-
+              git reset --hard; git pull; chmod 777 *;
+              /opt/semoss-artifacts/artifacts/scripts/runCS.sh
+          ports:
+            - name: 8080tcp00
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: REMOTE_SECURITY_IP
+              value: '10.60.20.232:1521'
+            - name: REMOTE_LOCALMASTER_IP
+              value: '10.60.18.187:1521'
+            - name: REMOTE_SCHEDULER_IP
+              value: '10.60.31.84:1521'
+            - name: REMOTE_THEMES_IP
+              value: '10.60.25.29:1521'
+            - name: REMOTE_SECURITY
+              value: 'true'
+            - name: REMOTE_LOCALMASTER
+              value: 'true'
+            - name: REMOTE_SCHEDULER
+              value: 'true'
+            - name: REMOTE_THEMES
+              value: 'true'
+            - name: FILE_UPLOAD_LIMIT
+              value: '5000'
+            - name: T_ON
+              value: 'false'
+            - name: SEMOSS_IS_CLUSTER
+              value: 'true'
+            - name: ANONYMOUS_USERS
+              value: 'false'
+            - name: SEMOSS_STORAGE_PROVIDER
+              value: MINIO
+            - name: S3_REGION
+              value: us-east-1
+            - name: S3_BUCKET
+              value: hcxdemo
+            - name: S3_ENDPOINT
+              value: 'http://10.60.24.200:9000'
+            - name: S3_ACCESS_KEY
+              value: SEMOSSACCESSKEY
+            - name: S3_SECRET_KEY
+              value: SEMOSSSECRET
+            - name: SECURITY_ON
+              value: 'true'
+            - name: SETSOCIAL
+              value: 'true'
+            - name: REDIRECT
+              value: 'https://healthcarex-gcp.deloitte.com/demo/HealthcareX/#!/'
+            - name: ENABLE_MS
+              value: 'true'
+            - name: ENABLE_NATIVE
+              value: 'true'
+            - name: ENABLE_NATIVE_REGISTRATION
+              value: 'true'
+            - name: R_ON
+              value: 'true'
+            - name: USE_TCP_PY
+              value: 'false'
+            - name: USE_FILE_PY
+              value: 'false'
+            - name: USE_PY_FILE
+              value: 'false'
+            - name: R_CONNECTION_TYPE
+              value: User_Rserve_Dedicated
+            - name: MONOLITH_COOKIE
+              value: monolith-healthcarex-demo-gcp
+            - name: GOOGLE_ANALYTICS_ID
+              value: UA-66598715-4
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+          resources: {}
+          livenessProbe:
+            httpGet:
+              path: /Monolith/api/config
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /Monolith/api/config
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          imagePullPolicy: Always
+
+

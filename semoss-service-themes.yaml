@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: semoss-themes-service
+  namespace: healthcarex-demo
+  labels:
+    app.kubernetes.io/name: semoss-themes-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 1521
+      targetPort: 1521
+  selector:
+    app.kubernetes.io/name: semoss-themes
+  type: ClusterIP
+  sessionAffinity: None

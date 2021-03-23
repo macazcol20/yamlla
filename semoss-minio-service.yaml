@@ -1,0 +1,24 @@
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: semoss-minio-22bq9
+#   generateName: semoss-minio-
+#   namespace: default
+#   selfLink: /api/v1/namespaces/default/services/semoss-minio-22bq9
+#   uid: 78de119a-024b-4f13-9286-d72d25fa3031
+#   resourceVersion: '1135624'
+#   creationTimestamp: '2020-09-06T17:36:59Z'
+#   labels:
+#     app.kubernetes.io/name: semoss-minio
+# spec:
+#   ports:
+#     - protocol: TCP
+#       port: 9000
+#       targetPort: 9000
+#   selector:
+#     app.kubernetes.io/name: semoss-minio
+#   clusterIP: 10.28.8.40
+#   type: ClusterIP
+#   sessionAffinity: None
+# status:
+#   loadBalancer: {}

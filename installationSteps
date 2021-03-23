@@ -1,0 +1,53 @@
+
+
+1. Security volume, localmaster volume, themes volume, scheduler volume
+
+2. apply semoss-security.yaml, semoss-scheduler.yaml, semoss-themes.yaml, semoss-localmaster.yaml
+
+3. apply semoss-service-scheduler, semoss-service-securtity, semoss-service-localmaster, semoss-service-themes
+
+3.1 We need to copy the initial db's into the pods
+
+https://github.com/kunal0137/SEMOSS_Config_Databases
+
+kubectl SEMOSS_Config_Databases-master/localmaster/databaseNewMaster.mv.db <localmasterpod>:/opt/h2-data
+kubectl SEMOSS_Config_Databases-master/security/database.mv.db <securitypod>:/opt/h2-data
+kubectl SEMOSS_Config_Databases-master/scheduler/database.mv.db <schedulerpod>:/opt/h2-data
+kubectl SEMOSS_Config_Databases-master/themes/database.mv.db <themespod>:/opt/h2-data
+
+
+3.5 run docker.semoss.org.yaml - if it doesn't work, then in step edit the image to be a public image for now at semoss/docker:latest
+
+
+
+
+4. Modifying the semoss-pod.yaml
+
+edit the cluster ip from the services in step 3 to the yaml section below
+
+            - name: REMOTE_SECURITY_IP
+              value: '10.112.5.88:1521'
+            - name: REMOTE_LOCALMASTER_IP
+              value: '10.112.12.123:1521'
+            - name: REMOTE_SCHEDULER_IP
+              value: '10.112.2.94:1521'
+            - name: REMOTE_THEMES_IP
+              value: '10.112.4.145:1521'
+
+
+Create Azure storage blob account  - insert account name and account key into yaml section 
+
+            - name: AZURE_ACCT_KEY
+              value: <myKey>
+            - name: AZURE_ACCT_NAME
+              value: <myAccount>
+
+deploy the semoss-pod.yaml
+
+deploy a semoss-service-nodeport.yaml
+
+Identify way forward for a load balancer/ingress to semoss service
+
+
+If you want to use helm - https://github.com/kunal0137/charts/tree/dev/charts/semoss/v1.4
+

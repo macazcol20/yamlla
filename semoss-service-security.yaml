@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: semoss-security-service
+  namespace: healthcarex-demo
+  labels:
+    app.kubernetes.io/name: semoss-security-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 1521
+      targetPort: 1521
+  selector:
+    app.kubernetes.io/name: semoss-security
+  type: ClusterIP
+  sessionAffinity: None

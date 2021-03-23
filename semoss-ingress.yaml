@@ -1,0 +1,8 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: semoss-pod-ingress
+spec:
+  backend:
+    serviceName: semoss-container-native-lb # Name of the Service targeted by the Ingress
+    servicePort: 8080 # Should match the port used by the Service

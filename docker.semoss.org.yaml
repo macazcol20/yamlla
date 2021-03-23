@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkb2NrZXIuc2Vtb3NzLm9yZyI6eyJwYXNzd29yZCI6IjI0b3hXU0pZUXZsXkwhIiwidXNlcm5hbWUiOiJrdW5hbDAxMzcifX19
+kind: Secret
+metadata:
+  name: docker-semoss-org
+  namespace: healthcarex-demo
+type: kubernetes.io/dockerconfigjson

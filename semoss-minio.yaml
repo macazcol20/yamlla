@@ -1,0 +1,81 @@
+# kind: Deployment
+# apiVersion: apps/v1
+# metadata:
+#   name: semoss-minio
+#   namespace: default
+#   selfLink: /apis/apps/v1/namespaces/default/deployments/semoss-minio
+#   uid: eb4b16c2-82a5-493e-8e4e-4f11a291cec7
+#   resourceVersion: '51227502'
+#   generation: 13
+#   creationTimestamp: '2020-09-06T17:47:52Z'
+#   labels:
+#     app.kubernetes.io/name: semoss-minio
+#   annotations:
+#     deployment.kubernetes.io/revision: '3'
+#     kubectl.kubernetes.io/last-applied-configuration: >
+#       {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"2"},"creationTimestamp":"2020-09-06T17:47:52Z","generation":7,"labels":{"app.kubernetes.io/name":"semoss-minio"},"name":"semoss-minio","namespace":"default","selfLink":"/apis/apps/v1/namespaces/default/deployments/semoss-minio","uid":"eb4b16c2-82a5-493e-8e4e-4f11a291cec7"},"spec":{"progressDeadlineSeconds":600,"replicas":0,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/name":"semoss-minio"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app.kubernetes.io/name":"semoss-minio"}},"spec":{"containers":[{"env":[{"name":"MINIO_ACCESS_KEY","value":"semossminio"},{"name":"MINIO_SECRET_KEY","value":"S3m0ss@123123"}],"image":"gcr.io/us-con-gcp-npr-0000263-072820/minio:bitnami","imagePullPolicy":"Always","name":"semoss-minio","ports":[{"containerPort":9000,"name":"minioport","protocol":"TCP"}],"resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/data","name":"minio-volume"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"volumes":[{"name":"minio-volume","persistentVolumeClaim":{"claimName":"minio-volume"}}]}}}}
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app.kubernetes.io/name: semoss-minio
+#   template:
+#     metadata:
+#       creationTimestamp: null
+#       labels:
+#         app.kubernetes.io/name: semoss-minio
+#     spec:
+#       volumes:
+#         - name: minio-volume
+#           persistentVolumeClaim:
+#             claimName: minio-volume
+#       containers:
+#         - name: semoss-minio
+#           image: 'gcr.io/us-con-gcp-npr-0000263-072820/minio:bitnami'
+#           ports:
+#             - name: minioport
+#               containerPort: 9000
+#               protocol: TCP
+#           env:
+#             - name: MINIO_ACCESS_KEY
+#               value: semossminio
+#             - name: MINIO_SECRET_KEY
+#               value: S3m0ss@123123
+#           resources: {}
+#           volumeMounts:
+#             - name: minio-volume
+#               mountPath: /data
+#           terminationMessagePath: /dev/termination-log
+#           terminationMessagePolicy: File
+#           imagePullPolicy: Always
+#       restartPolicy: Always
+#       terminationGracePeriodSeconds: 30
+#       dnsPolicy: ClusterFirst
+#       securityContext: {}
+#       schedulerName: default-scheduler
+#   strategy:
+#     type: RollingUpdate
+#     rollingUpdate:
+#       maxUnavailable: 25%
+#       maxSurge: 25%
+#   revisionHistoryLimit: 10
+#   progressDeadlineSeconds: 600
+# status:
+#   observedGeneration: 13
+#   replicas: 1
+#   updatedReplicas: 1
+#   readyReplicas: 1
+#   availableReplicas: 1
+#   conditions:
+#     - type: Progressing
+#       status: 'True'
+#       lastUpdateTime: '2020-10-29T17:44:28Z'
+#       lastTransitionTime: '2020-09-06T17:47:52Z'
+#       reason: NewReplicaSetAvailable
+#       message: ReplicaSet "semoss-minio-576f6c84fd" has successfully progressed.
+#     - type: Available
+#       status: 'True'
+#       lastUpdateTime: '2020-12-09T16:21:30Z'
+#       lastTransitionTime: '2020-12-09T16:21:30Z'
+#       reason: MinimumReplicasAvailable
+#       message: Deployment has minimum availability.
